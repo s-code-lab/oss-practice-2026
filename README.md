@@ -16,6 +16,11 @@ Gitのブランチについて学びます．
 ブランチの正体（`.git/refs/heads` と `.git/HEAD`）をのぞき，`git log --graph` と `git diff` で枝分かれと差分を確かめます．
 作ったサイトは，第7回で `git push` して GitHub Pages（`https://ユーザー名.github.io/`）で公開します．
 
+### [第7回：GitHubでサイトを公開する（git push と GitHub Pages）](./chap07/README.md)
+
+GitHubアカウントとSSH鍵を用意し，ローカルとリモートの間で履歴をやり取りする仕組み（`git clone`・`git push`・`origin/main`）を学びます．
+テンプレート（[tomohitoy/oss-pages-template-2026](https://github.com/tomohitoy/oss-pages-template-2026)）から `ユーザー名.github.io` リポジトリを作り，第6回で作ったサイトを `git push` して，`https://ユーザー名.github.io/` として公開します．
+
 ## テスト用環境の立ち上げ
 
 何も設定されていない環境を `docker` を利用することで起動できます．

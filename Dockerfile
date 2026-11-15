@@ -8,11 +8,13 @@ ARG DEBIAN_FRONTEND=noninteractive
 #   locales : 日本語ロケール（ja_JP.UTF-8）を作るため
 #   tzdata  : 日本時間（Asia/Tokyo）を使うため
 #   zsh     : コンテナ内で使うシェル
+#   openssh-client : ssh-keygen と ssh（第7回のSSH鍵の実習で使う）
 RUN apt-get update && apt-get install -y \
     git \
     vim \
     less \
     zsh \
+    openssh-client \
     locales \
     tzdata \
 && locale-gen ja_JP.UTF-8 \
