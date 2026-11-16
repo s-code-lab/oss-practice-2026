@@ -287,7 +287,16 @@ https://github.com/tomohitoy/oss-template-2026
 コピーして作ったリポジトリは，テンプレートとは別の，**あなただけのリポジトリ**になります．
 
 ### 3-B. テンプレートから，自分のリポジトリを作る
-1. ページ右上の緑色の **Use this template** ボタンをクリックし，**Create a new repository** を選びます
+1. ファイルの一覧の上にある，緑色の **Use this template** ボタンをクリックし，**Create a new repository** を選びます
+
+> **Use this template ボタンが見つからないとき**
+> GitHubにログインしていないと，このボタンは表示されません．ページ右上に **Sign in** と表示されていたら，ログインしてから開き直しましょう．
+> または，次のURLを開いても，同じ作成画面に進めます（ログインしていない場合は，ログインのあとで作成画面に移ります）．
+>
+> ```
+> https://github.com/tomohitoy/oss-template-2026/generate
+> ```
+
 2. 次のように入力します
 
 | 項目 | 入力する内容 |
@@ -787,6 +796,7 @@ git remote -v
 | `ssh -T git@github.com` で `Permission denied (publickey).` と表示される | 公開鍵がGitHubに登録されていません．2-Dで表示した公開鍵と，GitHubの **Settings → SSH and GPG keys** に登録した鍵が同じか確認しましょう．`.pub` のないほう（秘密鍵）を貼り付けていないかも確認しましょう |
 | SSH鍵の登録で `Key is already in use` と表示される | その鍵は，別のGitHubアカウントに登録済みです．教員に相談してください |
 | `ssh -T` の最初の質問で，`yes` 以外を入力してしまった | もう一度 `ssh -T git@github.com` を実行して，`yes` と入力しましょう |
+| テンプレートのページに **Use this template** ボタンがない | GitHubにログインしていません．ページ右上に **Sign in** と表示されていたら，ログインしてから開き直しましょう．`https://github.com/tomohitoy/oss-template-2026/generate` を開いても，同じ作成画面に進めます |
 | リポジトリを作ったのに，Settings に **Pages** の設定が出てこない／「Upgrade or make this repository public」と表示される | リポジトリが Private になっています．**Settings → General** のいちばん下の **Change visibility** で Public にしましょう |
 | サイトを開くと `404` と表示される（`There isn't a GitHub Pages site here.`） | ①公開に時間がかかっています．Actions タブで緑のチェックになるまで待ちましょう ②リポジトリ名が `ユーザー名.github.io` になっていません．**Settings → General** の **Repository name** で直せます ③3-Cの Pages の設定がされていません |
 | `git clone` で `Username for 'https://github.com':` と聞かれる | HTTPS のURLをコピーしています．`Ctrl + C` で中断し，4-Bの1で **SSH** のURLをコピーし直しましょう |
