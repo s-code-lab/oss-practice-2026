@@ -13,6 +13,7 @@ GitHubには，リポジトリに置いたHTMLファイルをWebサイトとし�
 - [ ] SSH鍵を作ってGitHubに登録し，`ssh -T git@github.com` で接続を確かめる
 - [ ] テンプレートから `ユーザー名.github.io` リポジトリを作り，「準備中」のページが公開されることを確かめる
 - [ ] そのリポジトリを `git clone` し，第6回で作った `index.html` に置きかえてコミットする
+- [ ] `bash scripts/check.sh` で，公開してよい状態か確認する
 - [ ] `git push` して，`https://ユーザー名.github.io/` に自分のサイトが表示されることを確かめる
 - [ ] 演習課題（サイトのURLとコマンドの出力結果）を提出する
 
@@ -61,7 +62,7 @@ GitHubに履歴を送っておけば，ほかの人と共有したり，別の�
 
 ### 今日の全体像
 ```
- GitHub   tomohitoy/oss-pages-template-2026     <- 教員が用意したテンプレート
+ GitHub   tomohitoy/oss-template-2026           <- 教員が用意したテンプレート
             |
             | (1) Use this template（GitHubの画面で，自分のアカウントにコピー）
             v
@@ -265,17 +266,22 @@ Hi taku-shoku! You've successfully authenticated, but GitHub does not provide sh
 ブラウザで，教員が用意したテンプレートのリポジトリを開きます．
 
 ```
-https://github.com/tomohitoy/oss-pages-template-2026
+https://github.com/tomohitoy/oss-template-2026
 ```
 
 このリポジトリには，次のファイルが入っています．
 
 | ファイル | 役割 |
 | --- | --- |
-| `index.html` | サイトのトップページ．いまは「準備中」のページが入っています |
+| `index.html` | サイトのトップページ．いまは「準備中」のページが入っています．**今日，第6回のサイトに置きかえます** |
+| `404.html` | 存在しないページを開いたときに表示されるページ |
+| `robots.txt` | 検索エンジンへのお願い．はじめは「検索結果に載せないで」という設定です（「発展」を参照） |
+| `scripts/check.sh` | 公開前のセルフチェックをするスクリプト（実習4で使います） |
 | `README.md` | リポジトリの説明．GitHubのリポジトリのページに表示されます |
+| `LICENSE` | ライセンス（MITライセンス）．ほかの人がファイルをどんな条件で使ってよいかを示します（「発展」を参照） |
 | `.nojekyll` | GitHub Pages に「ファイルを変換せずに，そのまま公開して」と伝えるための空のファイル（実習4で説明します） |
 | `.gitignore` | Gitで管理しないファイル（Macが自動で作る `.DS_Store` など）の一覧 |
+| `.gitattributes` | Windowsでも，`scripts/check.sh` の改行コードが変わらないようにする設定 |
 
 **テンプレートリポジトリ**とは，「このファイル一式をコピーして，自分の新しいリポジトリを作る」ためのひな形です．
 コピーして作ったリポジトリは，テンプレートとは別の，**あなただけのリポジトリ**になります．
@@ -297,7 +303,7 @@ https://github.com/tomohitoy/oss-pages-template-2026
 **Repository name は，一字一句まちがえないでください．**
 ユーザー名とちがう名前にすると，`https://ユーザー名.github.io/` では公開されません．
 
-`taku-shoku/taku-shoku.github.io` のようなページが表示され，リポジトリ名の下に `generated from tomohitoy/oss-pages-template-2026` と表示されれば成功です．
+`taku-shoku/taku-shoku.github.io` のようなページが表示され，リポジトリ名の下に `generated from tomohitoy/oss-template-2026` と表示されれば成功です．
 
 ### 3-C. GitHub Pages の設定を確認する
 作ったリポジトリのページで，次の順に開きます．
@@ -328,6 +334,15 @@ https://ユーザー名.github.io/
 ```
 
 「このサイトは準備中です」というページが表示されれば，**GitHub Pages の設定は成功**です！
+
+ついでに，存在しないページも開いてみましょう．
+
+```
+https://ユーザー名.github.io/abc
+```
+
+「404 ページが見つかりません」と表示されます．これは，テンプレートに入っている `404.html` です．
+GitHub Pages は，見つからないページを開かれると，自動で `404.html` を表示してくれます．
 
 > **ポイント**：先に「準備中」のページで公開を確かめておくのは，うまくいかないときに原因を切り分けるためです．
 > ここで表示できていれば，このあと自分のサイトが表示されないときは「GitHub Pages の設定」ではなく「push」のほうに原因がある，とわかります．
@@ -454,7 +469,9 @@ ls -a
 
 表示例：
 ```
-.           ..          .git        .gitignore  .nojekyll   README.md   index.html
+.               .gitattributes  .nojekyll       LICENSE         index.html      scripts
+..              .gitignore      404.html        README.md       robots.txt
+.git
 ```
 
 `-a` をつけると，`.` で始まる「隠しファイル」も表示されます．
@@ -617,7 +634,49 @@ nothing to commit, working tree clean
 
 「`origin/main` より1コミット進んでいます．`git push` で公開しましょう」と教えてくれています．
 
-### 4-F. push する
+### 4-F. push する前に，セルフチェックをする
+push すると，全世界に公開されます．その前に，テンプレートに入っているチェック用のスクリプトで確認しましょう．
+
+```bash
+bash scripts/check.sh
+```
+
+このスクリプトは，ファイルやGitの設定を何も書きかえず，次のことを確認して表示するだけです．
+- `index.html` が「準備中」のページから置きかわっているか，文字コードの指定があるか
+- `index.html` に，メールアドレスや電話番号のような文字列が入っていないか
+- コミットに記録された名前とメールアドレス（4-Cの設定）
+- まだコミットや push をしていないものがないか
+
+表示例（後半）：
+```
+== 3. コミットに記録される名前とメールアドレス（全世界から見えます） ==
+         名前：taku-shoku
+         メール：12345678+taku-shoku@users.noreply.github.com
+  [OK]   名前が設定されています（公開してよい名前か，上の表示を確認しましょう）
+  [OK]   メールアドレスは GitHub の noreply アドレスです
+
+== 4. Git の状態 ==
+  [OK]   main ブランチにいます
+  [注意] まだ push していないコミットが 1 個あります
+         -> git push origin main で GitHub に送りましょう
+
+== 結果 ==
+  [NG] はありません．[注意] の 1 個を確認してから進みましょう
+  ※ このチェックは目安です．最後は，ブラウザで自分のサイトを見て確認しましょう
+```
+
+- **[NG]**：push する前に，必ず直してください．`→` のあとにヒントが表示されます
+- **[注意]**：問題ないか，自分の目で確認してください．この時点では「まだ push していないコミットが 1 個あります」と出るのが正常です
+
+`index.html` を直した場合は，もう一度 `git add` → `git commit` してから，`bash scripts/check.sh` で確認しましょう．
+
+> 4-Cの設定をする前にコミットしてしまった人は，「まだ push していないコミットに，次のアドレスが記録されています」と表示されます．
+> 4-Cの設定をしてから，次のコマンドで直前のコミットを作り直しましょう．
+> ```bash
+> git commit --amend --reset-author --no-edit
+> ```
+
+### 4-G. push する
 いよいよ，あなたのコミットをGitHubに送ります！
 
 ```bash
@@ -740,6 +799,8 @@ git remote -v
 | `git push` で `! [rejected]  main -> main (fetch first)` と表示される | GitHubの画面で，直接ファイルを編集した可能性があります．`git pull --no-rebase origin main` で取りこんでから，もう一度 push しましょう（エディタが開いたら，Vimなら `:wq` で保存して閉じます） |
 | push したのに，サイトが「準備中」のまま | ①Actions タブで，処理が終わるまで待ちましょう ②強制再読み込み（Windows：`Ctrl + F5`，Mac：`Command + Shift + R`）をしましょう ③`git log --oneline` で，`origin/main` が自分のコミットまで進んでいるか確認しましょう |
 | サイトの日本語が文字化けする | `index.html` に `<meta charset="UTF-8">` が入っているか確認しましょう |
+| `bash scripts/check.sh` で `No such file or directory` と表示される | サイト用のリポジトリ（`ユーザー名.github.io`）のいちばん上のフォルダで実行していません．`pwd` で確認しましょう |
+| `bash scripts/check.sh` で `$'\r': command not found` と表示される | エディタで開いたときに，改行コードが変わってしまっています．`rm scripts/check.sh` → `git restore scripts/check.sh` で元に戻しましょう |
 | `git log` の画面から戻れない | `q` キーを押すと戻れます |
 
 ## まとめ
@@ -751,6 +812,7 @@ git remote -v
 - **`git remote -v`**：リモートリポジトリの名前とURLを表示する
 - **`git config user.email "アドレス"`**：`--global` なしで，いまいるリポジトリだけの設定をする
 - **`cp コピー元 コピー先`**：ファイルをコピーする
+- **`bash scripts/check.sh`**：テンプレートに入っている，公開前のセルフチェック
 - **`git push origin main`**：ローカルの `main` ブランチのコミットを，リモート（`origin`）に送る
 
 ### ローカルとリモート
@@ -800,6 +862,42 @@ git push origin main
 ### README.md を自分用に書きかえる
 `README.md` は，GitHubのリポジトリのページに表示される説明文です（サイトには表示されません）．
 テンプレートの説明のままになっているので，自分のサイトの説明に書きかえて，コミット → push してみましょう．
+
+### LICENSE を自分の名前にする
+`LICENSE` は，このリポジトリのファイルを，ほかの人がどんな条件で使ってよいかを示すファイルです．
+テンプレートの `LICENSE` は MIT ライセンスで，`Copyright` の行にはテンプレートの作者（教員）の名前が書かれています．
+
+```
+Copyright (c) 2026 Tomohito Yamazaki
+```
+
+`index.html` は，もうあなたが作ったサイトに置きかわっています．
+エディタで `LICENSE` を開き，この行の名前を自分のユーザー名に書きかえて，コミット → push してみましょう．
+
+```
+Copyright (c) 2026 taku-shoku
+```
+
+> 自分の作ったものを，どんな条件で使ってもらうか（MITのままにするか，ほかのライセンスにするか）は，作った人が決めることができます．
+> オープンソースのライセンスについては，今後の講義でくわしく学びます．
+
+### 検索エンジンに載せる（robots.txt）
+テンプレートの `robots.txt` は，「このサイトのページを，検索エンジンに集めないでください」という設定になっています．
+URLを知っている人は誰でも見られますが，Google などの検索結果には載りにくくなります．
+
+検索結果に載せたくなったら，`robots.txt` を削除して，コミット → push します．
+
+```bash
+git rm robots.txt
+```
+```bash
+git commit -m "検索エンジンに載せるため robots.txt を削除"
+```
+```bash
+git push origin main
+```
+
+> `robots.txt` は「お願い」なので，すべての検索エンジンが守るとはかぎりません．公開したくない情報は，そもそもサイトに載せないようにしましょう．
 
 ### SSH鍵にパスフレーズをつける
 今日はパスフレーズなしで鍵を作りましたが，パスフレーズをつけると，万が一秘密鍵のファイルを盗まれても，すぐには使われないようにできます．

@@ -19,7 +19,7 @@ Gitのブランチについて学びます．
 ### [第7回：GitHubでサイトを公開する（git push と GitHub Pages）](./chap07/README.md)
 
 GitHubアカウントとSSH鍵を用意し，ローカルとリモートの間で履歴をやり取りする仕組み（`git clone`・`git push`・`origin/main`）を学びます．
-テンプレート（[tomohitoy/oss-pages-template-2026](https://github.com/tomohitoy/oss-pages-template-2026)）から `ユーザー名.github.io` リポジトリを作り，第6回で作ったサイトを `git push` して，`https://ユーザー名.github.io/` として公開します．
+テンプレート（[tomohitoy/oss-template-2026](https://github.com/tomohitoy/oss-template-2026)）から `ユーザー名.github.io` リポジトリを作り，第6回で作ったサイトを `git push` して，`https://ユーザー名.github.io/` として公開します．
 
 ## テスト用環境の立ち上げ
 
