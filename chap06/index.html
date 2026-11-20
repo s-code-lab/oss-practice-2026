@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>yaaaa | Portfolio</title>
+
+  <style>
+    /* ページ全体の基本設定 */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: #eeeeee;
+      color: #222222;
+      font-family: sans-serif;
+      line-height: 1.8;
+    }
+
+    /* ページ上部のタイトル部分 */
+    header {
+      background-color: #222222;
+      color: white;
+      padding: 55px 10%;
+    }
+
+    header p {
+      color: #bbbbbb;
+      letter-spacing: 3px;
+    }
+
+    header h1 {
+      font-size: 42px;
+      margin: 10px 0;
+    }
+
+    /* メインコンテンツの配置 */
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* 各紹介項目のデザイン */
+    section {
+      background-color: white;
+      margin-bottom: 20px;
+      padding: 30px;
+      border-left: 5px solid #222222;
+    }
+
+    section h2 {
+      margin-top: 0;
+      font-size: 20px;
+      letter-spacing: 2px;
+      border-bottom: 1px solid #dddddd;
+      padding-bottom: 10px;
+    }
+
+    /* 基本情報を横並びにする */
+    .info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .info span {
+      background-color: #eeeeee;
+      padding: 7px 15px;
+    }
+
+    /* ページ下部のデザイン */
+    footer {
+      background-color: #222222;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    /* スマートフォン向けの表示設定 */
+    @media (max-width: 600px) {
+      header {
+        padding: 40px 25px;
+      }
+
+      header h1 {
+        font-size: 30px;
+      }
+
+      section {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- サイトのタイトル -->
+  <header>
+    <p>MY PORTFOLIO</p>
+    <h1>yaaaa</h1>
+    <p>Information Engineering</p>
+  </header>
+
+  <!-- 自己紹介の内容 -->
+  <main>
+    <section>
+      <h2>01 / PROFILE</h2>
+      <div class="info">
+        <span>3年</span>
+        <span>情報工学科</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>02 / HOBBY</h2>
+      <p>趣味はお絵かきです。</p>
+    </section>
+
+    <section>
+      <h2>03 / EXPERIENCE</h2>
+      <p>JavaやExcelに触れた経験があります。</p>
+    </section>
+
+    <section>
+      <h2>04 / LEARNING</h2>
+      <p>この授業ではGitHubの使い方を学びたいです。</p>
+    </section>
+
+    <section>
+      <h2>05 / MESSAGE</h2>
+      <p>こんばんは。</p>
+    </section>
+  </main>
+
+  <!-- ページの終わり -->
+  <footer>
+    <p>MY PORTFOLIO / yaaaa</p>
+  </footer>
+</body>
+</html>
